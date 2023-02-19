@@ -1,0 +1,19 @@
+.place__like {
+  width: 22px;
+  height: 19px;
+  background-image: url(../../../images/like.svg);
+  align-self: flex-end;
+  background-position: center;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  transition: .5s ease;
+}
+
+.place__like:hover {
+  opacity: .5;
+  transition: .5s ease;
+}
+
+

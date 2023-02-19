@@ -1,0 +1,12 @@
+.photo-pop-up__description {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', Arial;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  color: #fff;
+  text-align: left;
+  margin-top: 10px;
+}

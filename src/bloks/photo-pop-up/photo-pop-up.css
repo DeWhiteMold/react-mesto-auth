@@ -1,0 +1,9 @@
+.photo-pop-up {
+  position: fixed;
+  top: 15vh;
+  left: center;
+  display: flex;
+  flex-direction: row;
+  z-index: 3;
+  transition: .5s ease;
+}

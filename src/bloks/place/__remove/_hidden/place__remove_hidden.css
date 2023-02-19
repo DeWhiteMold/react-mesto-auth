@@ -1,0 +1,4 @@
+.place__remove_hidden {
+  visibility: hidden;
+  opacity: 0;
+}

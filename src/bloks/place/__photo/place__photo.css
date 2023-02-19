@@ -1,0 +1,8 @@
+.place__photo {
+  background-position: center;
+  background-size: cover;
+  width: 282px;
+  min-height: 282px;
+  border-radius: 10px 10px 0 0;
+  object-position: center;
+}

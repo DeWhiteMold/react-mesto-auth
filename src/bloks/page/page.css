@@ -1,0 +1,7 @@
+.page{
+  display: flex;
+  flex-direction: column;
+  background-color: #000;
+  align-items: center;
+  position: relative;
+}
