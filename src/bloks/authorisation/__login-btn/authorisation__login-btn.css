@@ -1,0 +1,10 @@
+.authorisation__login-btn {
+  border: none;
+  background-color: transparent;
+  font-family: 'Inter';
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17px;
+  color: #fff;
+  margin-top: 15px;
+}

@@ -5,6 +5,22 @@
 
 @import url(./bloks/header/header.css);
 @import url(./bloks/header/__logo/header__logo.css);
+@import url(./bloks/header/__user-email/header__user-email.css);
+@import url(./bloks/header/__log-btn/header__log-btn.css);
+
+@import url(./bloks/authorisation/authorisation.css);
+@import url(./bloks/authorisation/__form/authorisation__form.css);
+@import url(./bloks/authorisation/__title/authorisation__title.css);
+@import url(./bloks/authorisation/__input/authorisation__input.css);
+@import url(./bloks/authorisation/__login-btn/authorisation__login-btn.css);
+@import url(./bloks/authorisation/__submit-btn/authorisation__submit-btn.css);
+
+@import url(./bloks/info-tooltip/info-tooltip.css);
+@import url(./bloks/info-tooltip/__box/info-tooltip__box.css);
+@import url(./bloks/info-tooltip/__image/info-tooltip__image.css);
+@import url(./bloks/info-tooltip/__text/info-tooltip__text.css);
+@import url(./bloks/info-tooltip/__close-button/info-tooltip__close-button.css);
+@import url(./bloks/info-tooltip/__overlay/info-tooltip__overlay.css);
 
 @import url(./bloks/content/content.css);
 

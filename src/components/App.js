@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 import Header from './Header.js';
+import Register from './Register.js';
+import Login from './Login.js';
+import InfoTooltip from './InfoTooltip.js';
 import Main from './Main.js';
 import EditProfilePopup from './EditProfilePopup.js';
 import EditAvatarPopup from './EditAvatarPopup.js';
@@ -8,6 +11,7 @@ import Footer from './Footer.js';
 import api from '../utils/Api.js';
 import CurrentUserContext from '../contexts/CurrentUserContext.js';
 import '../index.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 function App() {
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
@@ -111,32 +115,37 @@ function App() {
   }, [])
 
   return (
-    <CurrentUserContext.Provider value={currentUser} >
-      <div className="page">
-        <Header />
-        <Main 
-          cards={cards}
+    <BrowserRouter>
+      <CurrentUserContext.Provider value={currentUser} >
+        <div className="page">
+          <Header />
+          {/* <Register /> */}
+          <Login />
+          <InfoTooltip status={false}/>
+          {/* <Main 
+            cards={cards}
 
-          onEditAvatar={handleAvatarClick} 
-          onEditProfile={handleEditProfileClick} 
-          onAddPlace={handleAddPlaceClick}
+            onEditAvatar={handleAvatarClick} 
+            onEditProfile={handleEditProfileClick} 
+            onAddPlace={handleAddPlaceClick}
 
-          onCardClick={handleCardClick}
-          selectedCardPhoto={selectedCardPhoto}
-          onCardLike={handleCardLike}
-          onCardDelete={handleCardDelete}
+            onCardClick={handleCardClick}
+            selectedCardPhoto={selectedCardPhoto}
+            onCardLike={handleCardLike}
+            onCardDelete={handleCardDelete}
 
-          closeHandler={closeAllPopUps}
-        />
-        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} 
-          onClose={closeAllPopUps} onAvatarUpdate={handleAvatarUpdate}/>
-        <EditProfilePopup isOpen={isEditProfilePopupOpen} 
-          onClose={closeAllPopUps} onUserUpdate={handleUserUpdate}/>
-        <AddPlacePopup isOpen={isAddPlacePopupOpen}
-          onClose={closeAllPopUps} onCardAdd={handleCardAdd}/>
-        <Footer />
-      </div>
-    </CurrentUserContext.Provider>
+            closeHandler={closeAllPopUps}
+          /> */}
+          <EditAvatarPopup isOpen={isEditAvatarPopupOpen} 
+            onClose={closeAllPopUps} onAvatarUpdate={handleAvatarUpdate}/>
+          <EditProfilePopup isOpen={isEditProfilePopupOpen} 
+            onClose={closeAllPopUps} onUserUpdate={handleUserUpdate}/>
+          <AddPlacePopup isOpen={isAddPlacePopupOpen}
+            onClose={closeAllPopUps} onCardAdd={handleCardAdd}/>
+          <Footer />
+        </div>
+      </CurrentUserContext.Provider>
+    </BrowserRouter>
   );
 }
 
