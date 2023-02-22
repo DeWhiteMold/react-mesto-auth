@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Header from './Header.js';
 import Register from './Register.js';
 import Login from './Login.js';
 import InfoTooltip from './InfoTooltip.js';
+import ProtectedRouteElement from './ProtectedRoute.js';
 import Main from './Main.js';
 import EditProfilePopup from './EditProfilePopup.js';
 import EditAvatarPopup from './EditAvatarPopup.js';
@@ -11,16 +13,32 @@ import Footer from './Footer.js';
 import api from '../utils/Api.js';
 import CurrentUserContext from '../contexts/CurrentUserContext.js';
 import '../index.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 function App() {
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
+  const [isTooltipOpen, setIsTooltipOpen] = useState(false);
+  const [isAuthError, setIsAuthError] = useState(false);
+  const [isLogged, setIsLogged] = useState(false)
   const [selectedCardPhoto, setSelectedCardPhoto] = useState({});
 
   const [currentUser, setCurrentUser] = useState({userName: 'Жак-Ив Кусто', userDescription: 'Исследователь', userAvatar: '', userId: ''});
   const [cards, setCards] = useState([]);
+
+  function handleError() {
+    setIsAuthError(true);
+    setIsTooltipOpen(true);
+  }
+
+  function handleReg() {
+    setIsAuthError(false);
+    setIsTooltipOpen(true);
+  }
+
+  function handleLog() {
+    setIsLogged(true);
+  }
 
   function handleAvatarClick() {
     setEditAvatarPopupOpen(true);
@@ -42,6 +60,7 @@ function App() {
     setEditAvatarPopupOpen(false);
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
+    setIsTooltipOpen(false);
     setSelectedCardPhoto({});
   }
 
@@ -119,23 +138,32 @@ function App() {
       <CurrentUserContext.Provider value={currentUser} >
         <div className="page">
           <Header />
-          {/* <Register /> */}
-          <Login />
-          <InfoTooltip status={false}/>
-          {/* <Main 
-            cards={cards}
-
-            onEditAvatar={handleAvatarClick} 
-            onEditProfile={handleEditProfileClick} 
-            onAddPlace={handleAddPlaceClick}
-
-            onCardClick={handleCardClick}
-            selectedCardPhoto={selectedCardPhoto}
-            onCardLike={handleCardLike}
-            onCardDelete={handleCardDelete}
-
-            closeHandler={closeAllPopUps}
-          /> */}
+          <Routes>
+            <Route path="/sing-in" element={<Login onError={handleError} onLog={handleLog}/>} />
+            <Route path="/sing-up" element={<Register onError={handleError} onReg={handleReg} />} />
+            <Route path="/" element={<ProtectedRouteElement
+              isLogged={isLogged}
+              element={
+                <Main 
+                  cards={cards}
+    
+                  onEditAvatar={handleAvatarClick} 
+                  onEditProfile={handleEditProfileClick} 
+                  onAddPlace={handleAddPlaceClick}
+    
+                  onCardClick={handleCardClick}
+                  selectedCardPhoto={selectedCardPhoto}
+                  onCardLike={handleCardLike}
+                  onCardDelete={handleCardDelete}
+    
+                  closeHandler={closeAllPopUps}
+                />
+              }
+              />} 
+            />
+          </Routes>
+          <InfoTooltip isOpen={isTooltipOpen}
+            onClose={closeAllPopUps} isError={isAuthError} />
           <EditAvatarPopup isOpen={isEditAvatarPopupOpen} 
             onClose={closeAllPopUps} onAvatarUpdate={handleAvatarUpdate}/>
           <EditProfilePopup isOpen={isEditProfilePopupOpen} 

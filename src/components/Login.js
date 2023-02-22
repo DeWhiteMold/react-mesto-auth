@@ -1,10 +1,42 @@
-function Login() {
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+import authApi from '../utils/AuthApi';
+
+function Login({onLog, onError}) {
+  const [emailValue, setEmailValue] = useState('');
+  const [passwordValue, setPasswordValue] = useState('');
+
+  const navigate = useNavigate();
+
+  function handleEmailInput(e) {
+    setEmailValue(e.target.value);
+  }
+
+  function handlePasswordInput(e) {
+    setPasswordValue(e.target.value);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    authApi.singIn({
+      email: emailValue,
+      password: passwordValue
+    })
+    .then((res) => {
+      onLog();
+      navigate('/', {replace: true});
+    })
+    .catch(() => {
+      onError();
+    })
+  }
+
   return (
     <main className="authorisation">
-      <form className="authorisation-form">
+      <form className="authorisation__form" onSubmit={handleSubmit}>
         <h2 className="authorisation__title">Вход</h2>
-        <input type="email" className="authorisation__input" placeholder="Email" />
-        <input type="password" className="authorisation__input" placeholder="Пароль" />
+        <input type="email" className="authorisation__input" placeholder="Email" value={emailValue} onChange={handleEmailInput} />
+        <input type="password" className="authorisation__input" placeholder="Пароль" value={passwordValue} onChange={handlePasswordInput} />
         <button type="submit" className="authorisation__submit-btn">Войти</button>
       </form>
     </main>

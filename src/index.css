@@ -16,6 +16,7 @@
 @import url(./bloks/authorisation/__submit-btn/authorisation__submit-btn.css);
 
 @import url(./bloks/info-tooltip/info-tooltip.css);
+@import url(./bloks/info-tooltip/_hidden/info-tooltip_hidden.css);
 @import url(./bloks/info-tooltip/__box/info-tooltip__box.css);
 @import url(./bloks/info-tooltip/__image/info-tooltip__image.css);
 @import url(./bloks/info-tooltip/__text/info-tooltip__text.css);
