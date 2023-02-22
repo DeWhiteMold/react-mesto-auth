@@ -13,6 +13,7 @@ import Footer from './Footer.js';
 import api from '../utils/Api.js';
 import CurrentUserContext from '../contexts/CurrentUserContext.js';
 import '../index.css';
+import authApi from '../utils/AuthApi.js';
 
 function App() {
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
@@ -23,8 +24,10 @@ function App() {
   const [isLogged, setIsLogged] = useState(false)
   const [selectedCardPhoto, setSelectedCardPhoto] = useState({});
 
+  const [currentUserEmail, setCurrentUserEmail] = useState('')
   const [currentUser, setCurrentUser] = useState({userName: 'Жак-Ив Кусто', userDescription: 'Исследователь', userAvatar: '', userId: ''});
   const [cards, setCards] = useState([]);
+
 
   function handleError() {
     setIsAuthError(true);
@@ -36,8 +39,9 @@ function App() {
     setIsTooltipOpen(true);
   }
 
-  function handleLog() {
+  function handleLog(email) {
     setIsLogged(true);
+    setCurrentUserEmail(email)
   }
 
   function handleAvatarClick() {
@@ -115,6 +119,12 @@ function App() {
   }
 
   useEffect(() => {
+    authApi.checkValid(localStorage.getItem('token'))
+    .then((res) => {
+      setCurrentUserEmail(res.email);
+      setIsLogged(true);
+    })
+
     api.getUserInfo()
       .then((res) => {
         setCurrentUser({
@@ -137,7 +147,7 @@ function App() {
     <BrowserRouter>
       <CurrentUserContext.Provider value={currentUser} >
         <div className="page">
-          <Header />
+          <Header email={currentUserEmail} />
           <Routes>
             <Route path="/sing-in" element={<Login onError={handleError} onLog={handleLog}/>} />
             <Route path="/sing-up" element={<Register onError={handleError} onReg={handleReg} />} />

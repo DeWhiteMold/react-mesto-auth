@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import authApi from '../utils/AuthApi';
 
@@ -25,11 +25,24 @@ function Login({onLog, onError}) {
     .then((res) => {
       onLog();
       navigate('/', {replace: true});
+      localStorage.setItem('token', res.token);
+    })
+    .then(() => {
+      setEmailValue('');
+      setPasswordValue('');
     })
     .catch(() => {
       onError();
     })
   }
+
+  useEffect(() => {
+    authApi.checkValid(localStorage.getItem('token'))
+    .then((res) => {
+      onLog(res.data.email);
+      navigate('/', {replace: true});
+    })
+  }, [])
 
   return (
     <main className="authorisation">

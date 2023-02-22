@@ -2,14 +2,19 @@ import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import logo from '../images/logo.svg'
 
-function Header() {
+function Header({email}) {
   const location = useLocation();
   const navigate = useNavigate();
   const [btnText, setBtnState] = useState('');
   const [path, setPath] = useState('');
+  const [userEmail, setUserEmail] = useState(email);
 
   function handleClick() {
     navigate(path, {replace: true})
+    if(location.pathname === '/') {
+      localStorage.removeItem('token');
+      setUserEmail('')
+    }
   }
 
   useEffect(() => {
@@ -22,6 +27,7 @@ function Header() {
       setPath('/sing-in');
     }
     else {
+      setUserEmail(email);
       setBtnState('Выйти');
       setPath('/sing-in');
     }
@@ -31,8 +37,8 @@ function Header() {
       <header className="header">
         <img src={logo} alt="Лого" className="header__logo" />
         <div className="header__user-info">
-          <span className="header__user-email"></span>
-          <button className="header__log-btn" onClick={handleClick} >{btnText}</button>
+          <span className="header__user-email">{userEmail}</span>
+          <button className={`header__log-btn ${btnText === 'Выйти' ? 'header__log-btn_logged' : ''}`} onClick={handleClick} >{btnText}</button>
         </div>
       </header>
   );

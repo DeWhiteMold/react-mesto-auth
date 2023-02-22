@@ -40,7 +40,6 @@ function EditProfilePopup(props) {
       userName: currentUser.userName || '',
       userDescription: currentUser.userDescription || ''
     })
-    console.log(userInfo);
   }, [currentUser])
 
   return (

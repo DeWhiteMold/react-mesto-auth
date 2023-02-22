@@ -13,7 +13,7 @@ class AuthApi {
   }
 
   singIn(inputData){
-    return fetch(`${this._url}/singin`, {
+    return fetch(`${this._url}/signin`, {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify(inputData)
@@ -21,7 +21,7 @@ class AuthApi {
   }
 
   singUp(inputData){
-    return fetch(`${this._url}/singup`, {
+    return fetch(`${this._url}/signup`, {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify(inputData)

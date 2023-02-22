@@ -7,6 +7,7 @@
 @import url(./bloks/header/__logo/header__logo.css);
 @import url(./bloks/header/__user-email/header__user-email.css);
 @import url(./bloks/header/__log-btn/header__log-btn.css);
+@import url(./bloks/header/__log-btn/_logged/header__log-btn_logged.css);
 
 @import url(./bloks/authorisation/authorisation.css);
 @import url(./bloks/authorisation/__form/authorisation__form.css);

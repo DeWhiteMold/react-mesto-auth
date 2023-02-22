@@ -26,6 +26,10 @@ function Register({ onReg, onError }) {
       console.log(res);
       onReg()
     })
+    .then(() => {
+      setEmailValue('');
+      setPasswordValue('');
+    })
     .catch(() => {
       onError()
     })
