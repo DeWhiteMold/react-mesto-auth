@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
-import authApi from '../utils/AuthApi';
 
-function Login({onLog, onError}) {
+function Login({onLog, isLogged}) {
   const [emailValue, setEmailValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
 
@@ -18,31 +17,17 @@ function Login({onLog, onError}) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    authApi.singIn({
-      email: emailValue,
-      password: passwordValue
-    })
-    .then((res) => {
-      onLog();
-      navigate('/', {replace: true});
-      localStorage.setItem('token', res.token);
-    })
-    .then(() => {
-      setEmailValue('');
-      setPasswordValue('');
-    })
-    .catch(() => {
-      onError();
-    })
+    onLog({
+        email: emailValue,
+        password: passwordValue
+      })
   }
 
   useEffect(() => {
-    authApi.checkValid(localStorage.getItem('token'))
-    .then((res) => {
-      onLog(res.data.email);
+    if(isLogged) {
       navigate('/', {replace: true});
-    })
-  }, [])
+    }
+  }, [isLogged])
 
   return (
     <main className="authorisation">

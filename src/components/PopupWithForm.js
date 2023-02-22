@@ -5,7 +5,6 @@ function PopupWithForm(props) {
   function handelSubmit(e) {
     e.preventDefault();
     props.onSubmitClick();
-    props.onClose();
   }
 
   return ( 

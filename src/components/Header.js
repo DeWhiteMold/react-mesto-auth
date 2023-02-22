@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import logo from '../images/logo.svg'
 
-function Header({email}) {
+function Header({email, onExit}) {
   const location = useLocation();
   const navigate = useNavigate();
   const [btnText, setBtnState] = useState('');
@@ -12,12 +12,12 @@ function Header({email}) {
   function handleClick() {
     navigate(path, {replace: true})
     if(location.pathname === '/') {
-      localStorage.removeItem('token');
-      setUserEmail('')
+      onExit();
     }
   }
 
   useEffect(() => {
+    setUserEmail(email);
     if(location.pathname === '/sing-in') {
       setBtnState('Регистрация');
       setPath('/sing-up');
@@ -31,7 +31,7 @@ function Header({email}) {
       setBtnState('Выйти');
       setPath('/sing-in');
     }
-  }, [location])
+  }, [location, email])
 
   return (
       <header className="header">

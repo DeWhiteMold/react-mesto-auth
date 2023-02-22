@@ -32,16 +32,34 @@ function App() {
   function handleError() {
     setIsAuthError(true);
     setIsTooltipOpen(true);
+
   }
 
-  function handleReg() {
-    setIsAuthError(false);
-    setIsTooltipOpen(true);
+  function handleReg(inputData) {
+    authApi.singUp(inputData)
+    .then(() => {
+      setIsAuthError(false);
+      setIsTooltipOpen(true);
+    })
+    .catch(() => {handleError()})
   }
 
-  function handleLog(email) {
-    setIsLogged(true);
-    setCurrentUserEmail(email)
+  function handleLog(inputData) {
+    authApi.singIn(inputData)
+    .then((res) => {
+      localStorage.setItem('token', res.token);
+    })
+    .then(() => {
+      setIsLogged(true);
+      setCurrentUserEmail(inputData.email);
+    })
+    .catch(() => {handleError()})
+  }
+
+  function handleExit() {
+    setIsLogged(false);
+    localStorage.removeItem('token');
+    setCurrentUserEmail('');
   }
 
   function handleAvatarClick() {
@@ -94,6 +112,7 @@ function App() {
           userId: res._id
         })
       })
+      .then(() => {closeAllPopUps()})
       .catch((err) => {console.log(err)})
   }
 
@@ -107,6 +126,7 @@ function App() {
           userId: res._id
         })
       })
+      .then(() => {closeAllPopUps()})
       .catch((err) => {console.log(err)})
   }
 
@@ -115,15 +135,17 @@ function App() {
       .then((res) => {
         setCards([res, ...cards]);
       })
+      .then(() => {closeAllPopUps()})
       .catch((err) => {console.log(err)})
   }
 
   useEffect(() => {
     authApi.checkValid(localStorage.getItem('token'))
     .then((res) => {
-      setCurrentUserEmail(res.email);
+      setCurrentUserEmail(res.data.email);
       setIsLogged(true);
     })
+    .catch((err) => {console.log(err)})
 
     api.getUserInfo()
       .then((res) => {
@@ -147,10 +169,10 @@ function App() {
     <BrowserRouter>
       <CurrentUserContext.Provider value={currentUser} >
         <div className="page">
-          <Header email={currentUserEmail} />
+          <Header email={currentUserEmail} onExit={handleExit} />
           <Routes>
-            <Route path="/sing-in" element={<Login onError={handleError} onLog={handleLog}/>} />
-            <Route path="/sing-up" element={<Register onError={handleError} onReg={handleReg} />} />
+            <Route path="/sing-in" element={<Login isLogged={isLogged} isError={isAuthError} onLog={handleLog}/>} />
+            <Route path="/sing-up" element={<Register isError={isAuthError} onReg={handleReg} />} />
             <Route path="/" element={<ProtectedRouteElement
               isLogged={isLogged}
               element={

@@ -40,7 +40,7 @@ function EditProfilePopup(props) {
       userName: currentUser.userName || '',
       userDescription: currentUser.userDescription || ''
     })
-  }, [currentUser])
+  }, [currentUser, props.isOpen])
 
   return (
     <PopupWithForm title="Редактировать профиль" name="edit-profile" submitBtnText="Сохранить" 

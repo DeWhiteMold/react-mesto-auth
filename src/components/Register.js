@@ -1,8 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import authApi from '../utils/AuthApi.js';
 
-function Register({ onReg, onError }) {
+function Register({ onReg, isError }) {
   const navigate = useNavigate();
 
   const [emailValue, setEmailValue] = useState('');
@@ -18,26 +17,22 @@ function Register({ onReg, onError }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    authApi.singUp({
-      password: passwordValue,
-      email: emailValue
-    })
-    .then((res) => {
-      console.log(res);
-      onReg()
-    })
-    .then(() => {
-      setEmailValue('');
-      setPasswordValue('');
-    })
-    .catch(() => {
-      onError()
-    })
+    onReg({
+        password: passwordValue,
+        email: emailValue
+      });
   }
 
   function handleSwichBtnClick() {
     navigate('/sing-in', {replace: true});
   }
+
+  useEffect(() => {
+    if(!isError) {
+      setEmailValue('');
+      setPasswordValue('');
+    }
+  }, [isError])
 
   return (
     <main className="authorisation">
